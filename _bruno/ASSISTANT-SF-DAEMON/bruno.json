@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "ASSISTANT-SF-DAEMON",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
