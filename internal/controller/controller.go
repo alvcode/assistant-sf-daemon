@@ -25,11 +25,23 @@ func (controller *Init) SetRoutes() error {
 	controller.router.MethodNotAllowed = handler.BuildHandler(handler.PageNotFoundHandler)
 
 	heartbeatHandler := handler.NewHeartbeatHandler()
+	jobHandler := handler.NewJobHandler()
 
 	controller.router.Handler(
 		http.MethodGet,
 		"/api/heartbeat",
 		handler.BuildHandler(heartbeatHandler.Heartbeat),
+	)
+
+	controller.router.Handler(
+		http.MethodPost,
+		"/api/start-job",
+		handler.BuildHandler(jobHandler.Start),
+	)
+	controller.router.Handler(
+		http.MethodGet,
+		"/api/status-job",
+		handler.BuildHandler(jobHandler.GetStatus),
 	)
 
 	return nil
