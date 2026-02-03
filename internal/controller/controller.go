@@ -2,6 +2,7 @@ package controller
 
 import (
 	"assistant-sf-daemon/internal/handler"
+	"assistant-sf-daemon/internal/ucase"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 )
@@ -26,11 +27,23 @@ func (controller *Init) SetRoutes() error {
 
 	heartbeatHandler := handler.NewHeartbeatHandler()
 	jobHandler := handler.NewJobHandler()
+	configHandler := handler.NewConfigHandler(ucase.NewConfigUseCase())
+
+	/**
+	запрос статуса
+		проверяем наличия конфига. если его нет - возвращаем ошибку с кодом 1
+	*/
 
 	controller.router.Handler(
 		http.MethodGet,
 		"/api/heartbeat",
 		handler.BuildHandler(heartbeatHandler.Heartbeat),
+	)
+
+	controller.router.Handler(
+		http.MethodGet,
+		"/api/config/status",
+		handler.BuildHandler(configHandler.GetInitialStatus),
 	)
 
 	controller.router.Handler(

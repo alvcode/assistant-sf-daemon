@@ -1,7 +1,10 @@
 package handler
 
 import (
+	"assistant-sf-daemon/internal/locale"
+	"assistant-sf-daemon/internal/ucase"
 	"encoding/json"
+	"errors"
 	"net/http"
 )
 
@@ -38,4 +41,15 @@ func SendResponse(w http.ResponseWriter, status int, response interface{}) {
 func PageNotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	SendErrorResponse(w, "Not Found", http.StatusNotFound, 0)
 	return
+}
+
+func buildErrorMessage(lang string, err error) string {
+	switch {
+	case errors.Is(err, ucase.ErrDefineAppPath):
+		return locale.T(lang, "error_define_app_path")
+	case errors.Is(err, ucase.ErrAppPathNotExists):
+		return locale.T(lang, "error_app_path_not_exists")
+	default:
+		return locale.T(lang, "unexpected_error")
+	}
 }

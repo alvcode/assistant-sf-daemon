@@ -18,7 +18,7 @@ type Job struct {
 }
 
 var (
-	currentJob = &Job{
+	CurrentJob = &Job{
 		Status: StatusIdle,
 	}
 	mu sync.Mutex
@@ -33,18 +33,14 @@ func NewJobHandler() *HeartbeatHandler {
 
 func (h *HeartbeatHandler) Start(w http.ResponseWriter, r *http.Request) {
 	mu.Lock()
-	currentJob.Status = StatusRunning
+	CurrentJob.Status = StatusRunning
 	mu.Unlock()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
-	go runJob(ctx, cancel, currentJob)
+	go runJob(ctx, cancel, CurrentJob)
 
-	SendResponse(w, http.StatusCreated, currentJob)
-}
-
-func (h *HeartbeatHandler) GetStatus(w http.ResponseWriter, r *http.Request) {
-	SendResponse(w, http.StatusOK, currentJob)
+	SendResponse(w, http.StatusCreated, CurrentJob)
 }
 
 func runJob(ctx context.Context, cancel context.CancelFunc, job *Job) {
@@ -59,9 +55,6 @@ func runJob(ctx context.Context, cancel context.CancelFunc, job *Job) {
 	ticker := time.NewTicker(1 * time.Second)
 	defer ticker.Stop()
 
-	job.Status = StatusRunning // имитация обновления
-	fmt.Println("tick job")
-
 	for {
 		select {
 		case <-ctx.Done():
@@ -73,4 +66,27 @@ func runJob(ctx context.Context, cancel context.CancelFunc, job *Job) {
 			mu.Unlock()
 		}
 	}
+
+	//for _, node := range tree {
+	//	if ctx.Err() != nil {
+	//		return
+	//	}
+	//
+	//	if isDebug {
+	//		color.Yellow("======= Обработка ноды: %s ==========", node.Name)
+	//	}
+	//
+	//	if node.Type == dict.StructTypeFolder {
+	//		// какой-то код
+	//	} else {
+	//		// какой-то код
+	//	}
+	//
+	//	// тут много разного кода
+	//}
+
+}
+
+func (h *HeartbeatHandler) GetStatus(w http.ResponseWriter, r *http.Request) {
+	SendResponse(w, http.StatusOK, CurrentJob)
 }
