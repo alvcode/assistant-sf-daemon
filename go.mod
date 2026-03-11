@@ -10,4 +10,4 @@ require (
 	golang.org/x/text v0.32.0
 )
 
-require github.com/mattn/go-sqlite3 v1.14.33 // indirect
+require github.com/mattn/go-sqlite3 v1.14.34 // indirect

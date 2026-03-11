@@ -4,5 +4,8 @@
   "unexpected_database_error": "Непредвиденная ошибка базы данных",
   "unexpected_error": "Непредвиденная ошибка",
   "error_define_app_path": "Ошибка определения пути для конфигурации приложения",
-  "error_app_path_not_exists": "Папка конфигурации приложения не найдена"
+  "error_app_path_not_exists": "Папка конфигурации приложения не найдена",
+  "error_db_file_not_exists": "Файл базы данных не найден",
+  "error_create_app_directory": "Ошибка создания директории приложения",
+  "error_auth": "Ошибка авторизации в Assistant. Проверьте верность указанных данных"
 }

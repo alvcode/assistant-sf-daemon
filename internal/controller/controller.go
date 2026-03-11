@@ -3,8 +3,9 @@ package controller
 import (
 	"assistant-sf-daemon/internal/handler"
 	"assistant-sf-daemon/internal/ucase"
-	"github.com/julienschmidt/httprouter"
 	"net/http"
+
+	"github.com/julienschmidt/httprouter"
 )
 
 type Init struct {
@@ -26,7 +27,7 @@ func (controller *Init) SetRoutes() error {
 	controller.router.MethodNotAllowed = handler.BuildHandler(handler.PageNotFoundHandler)
 
 	heartbeatHandler := handler.NewHeartbeatHandler()
-	jobHandler := handler.NewJobHandler()
+	//jobHandler := handler.NewJobHandler()
 	configHandler := handler.NewConfigHandler(ucase.NewConfigUseCase())
 
 	/**
@@ -36,26 +37,31 @@ func (controller *Init) SetRoutes() error {
 
 	controller.router.Handler(
 		http.MethodGet,
-		"/api/heartbeat",
+		"/heartbeat",
 		handler.BuildHandler(heartbeatHandler.Heartbeat),
 	)
 
 	controller.router.Handler(
 		http.MethodGet,
-		"/api/config/status",
-		handler.BuildHandler(configHandler.GetInitialStatus),
+		"/config/status",
+		handler.BuildHandler(configHandler.GetStatus),
 	)
-
 	controller.router.Handler(
 		http.MethodPost,
-		"/api/start-job",
-		handler.BuildHandler(jobHandler.Start),
+		"/config/init",
+		handler.BuildHandler(configHandler.Init),
 	)
-	controller.router.Handler(
-		http.MethodGet,
-		"/api/status-job",
-		handler.BuildHandler(jobHandler.GetStatus),
-	)
+
+	//controller.router.Handler(
+	//	http.MethodPost,
+	//	"/start-job",
+	//	handler.BuildHandler(jobHandler.Start),
+	//)
+	//controller.router.Handler(
+	//	http.MethodGet,
+	//	"/status-job",
+	//	handler.BuildHandler(jobHandler.GetStatus),
+	//)
 
 	return nil
 }

@@ -49,6 +49,12 @@ func buildErrorMessage(lang string, err error) string {
 		return locale.T(lang, "error_define_app_path")
 	case errors.Is(err, ucase.ErrAppPathNotExists):
 		return locale.T(lang, "error_app_path_not_exists")
+	case errors.Is(err, ucase.ErrDBFileNotExists):
+		return locale.T(lang, "error_db_file_not_exists")
+	case errors.Is(err, ucase.ErrCreateAppDirectory):
+		return locale.T(lang, "error_create_app_directory")
+	case errors.Is(err, ucase.ErrAuth):
+		return locale.T(lang, "error_auth")
 	default:
 		return locale.T(lang, "unexpected_error")
 	}

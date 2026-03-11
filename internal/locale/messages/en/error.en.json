@@ -4,5 +4,8 @@
   "unexpected_database_error": "Unexpected database error",
   "unexpected_error": "Unexpected error",
   "error_define_app_path": "Error defining path for application configuration",
-  "error_app_path_not_exists": "Application configuration folder not found"
+  "error_app_path_not_exists": "Application configuration folder not found",
+  "error_db_file_not_exists": "Database file not found",
+  "error_create_app_directory": "Error creating application directory",
+  "error_auth": "Authorization error in Assistant. Please check that the information you provided is correct"
 }

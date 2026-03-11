@@ -4,14 +4,15 @@ import (
 	"assistant-sf-daemon/internal/controller"
 	"context"
 	"fmt"
-	"github.com/julienschmidt/httprouter"
-	"github.com/rs/cors"
-	"golang.org/x/sync/errgroup"
 	"log"
 	"net"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/julienschmidt/httprouter"
+	"github.com/rs/cors"
+	"golang.org/x/sync/errgroup"
 )
 
 type App struct {
@@ -43,7 +44,7 @@ func (a *App) startHTTP(ctx context.Context) error {
 		log.Fatalln(errRoute)
 	}
 
-	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%d", "localhost", 8084))
+	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%d", "localhost", 8012))
 	if err != nil {
 		log.Fatalln(err)
 	}
